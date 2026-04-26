@@ -3,21 +3,23 @@
 from django.db import migrations
 import phonenumbers
 
+
 def fill_owner_pure_phone(apps, schema_editor):
     Flat = apps.get_model('property','Flat')
-
     for flat in Flat.objects.all():
-        phone = phonenumbers.parse(flat.owners_phonenumber, "RU")
-                
-        if phonenumbers.is_valid_number(phone):
-            flat.owner_pure_phone = phonenumbers.format_number(phone,phonenumbers.PhoneNumberFormat.E164)
-            flat.save(update_fields=["owner_pure_phone"])
+        try:
+            phone = phonenumbers.parse(flat.owners_phonenumber, "RU")   
+            if phonenumbers.is_valid_number(phone):
+                flat.owner_pure_phone = phonenumbers.format_number(phone,phonenumbers.PhoneNumberFormat.E164)
+                flat.save(update_fields=["owner_pure_phone"])
+        except Exception:
+            pass
+
 
 def move_backward(apps, schema_editor):
     Flat = apps.get_model('property','Flat')
     Flat.objects.all().update(owner_pure_phone=None)
-
-                
+              
 
 class Migration(migrations.Migration):
 
