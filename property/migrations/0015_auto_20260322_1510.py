@@ -9,7 +9,7 @@ def migrate_owners(apps,schema_editor):
     flat_objects = Flat.objects.all()
 
     for flat_object in flat_objects:
-        Owner.objects.get_or_create(owner=flat_object.owner, owners_phonenumber=flat_object.owners_phonenumber, owner_pure_phone=flat_object.owner_pure_phone, defaults=None)
+        Owner.objects.get_or_create(owner=flat_object.owner, owners_phonenumber=flat_object.owners_phonenumber, owner_pure_phone=flat_object.owner_pure_phone, defaults={"owners_phonenumber": None, "owner_pure_phone": None})
 
 class Migration(migrations.Migration):
 

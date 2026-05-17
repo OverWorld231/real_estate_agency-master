@@ -9,7 +9,7 @@ class Flat(models.Model):
         'Когда создано объявление',
         default=timezone.now,
         db_index=True)
-    new_building = models.BooleanField("Новостройка", null=True, blank=False)
+    new_building = models.BooleanField("Новостройка", null=True, blank=False, db_index=True)
     liked_by = models.ManyToManyField(User, related_name="liked_flats", verbose_name="Кто лайкнул", blank=True, db_index=True)
     description = models.TextField('Текст объявления', blank=True)
     price = models.IntegerField('Цена квартиры', db_index=True)
